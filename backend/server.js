@@ -1,25 +1,15 @@
+const express = require("express")
+const path = require("path")
 
-require("dotenv").config()
+const app = express()
 
-const express=require("express")
-const cors=require("cors")
-const bodyParser=require("body-parser")
+app.use(express.static(path.join(__dirname, "public")))
 
-const tokens=require("./routes/tokens")
-const admin=require("./routes/admin")
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"))
+})
 
-const app=express()
-
-app.use(cors())
-app.use(bodyParser.json())
-
-app.use("/api/tokens",tokens)
-app.use("/api/admin",admin)
-
-app.use(express.static("../frontend"))
-
-const PORT=process.env.PORT||3000
-
-app.listen(PORT,()=>{
-console.log("SpyTON Ultimate running",PORT)
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT)
 })
